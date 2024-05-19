@@ -1,7 +1,7 @@
 
 ## Javascript
 
-Si usamos la notación `this.variable` podemos usar hasta fuera del `scope` { }.
+
 
 EVENTOS —> [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
 
