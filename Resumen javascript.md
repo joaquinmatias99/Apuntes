@@ -216,22 +216,236 @@ Uso de expresiones regulares:
 - Creación de patrones para buscar y manipular texto.
 - Métodos `test()`, `exec()`, `match()`, `replace()`.
 
-## Try & Catch (Manejo de errores síncronos)
-Manejo de errores con bloques `try...catch`:
-- Detección y manejo de errores para mantener la estabilidad del programa.
+### Caracteres Especiales
+- .: Coincide con cualquier carácter excepto una nueva línea.
+- ^: Coincide con el inicio de una cadena.
+- $: Coincide con el final de una cadena.
+- *: Coincide con el carácter anterior 0 o más veces.
+- +: Coincide con el carácter anterior 1 o más veces.
+- ?: Coincide con el carácter anterior 0 o 1 vez.
+- {n}: Coincide exactamente con n repeticiones del carácter anterior.
+- {n,}: Coincide con n o más repeticiones del carácter anterior.
+- {n,m}: Coincide con al menos n y no más de m repeticiones del carácter anterior.
+- []: Define un conjunto de caracteres.
+- [^]: Define un conjunto de caracteres que no deben coincidir.
+- |: Alternancia (o lógico).
+- \: Escapa caracteres especiales.
+
+### Conjuntos de Caracteres Predefinidos
+- \d: Coincide con cualquier dígito (equivalente a [0-9]).
+- \D: Coincide con cualquier carácter que no sea un dígito.
+- \w: Coincide con cualquier carácter alfanumérico (equivalente a [A-Za-z0-9_]).
+- \W: Coincide con cualquier carácter no alfanumérico.
+- \s: Coincide con cualquier carácter de espacio en blanco (espacios, tabulaciones, saltos de línea).
+- \S: Coincide con cualquier carácter que no sea un espacio en blanco.
+#### Métodos Principales
+- test() Comprueba si hay una coincidencia en una cadena. Devuelve true o false.
+
+```javascript
+const regex = /hello/;
+console.log(regex.test('hello world')); // true
+```
+
+- exec() Busca una coincidencia en una cadena y devuelve un array con los detalles de la coincidencia o null si no hay coincidencia.
+
+```javascript
+const regex = /hello/;
+const result = regex.exec('hello world');
+console.log(result); // ["hello", index: 0, input: "hello world", groups: undefined]
+```
+
+- match() Busca coincidencias en una cadena y devuelve un array con las coincidencias o null si no hay coincidencia. Funciona con cadenas de texto.
+
+```javascript
+const str = 'hello world';
+const regex = /hello/;
+console.log(str.match(regex)); // ["hello", index: 0, input: "hello world", groups: undefined]
+```
+
+- replace() Busca coincidencias en una cadena y reemplaza las coincidencias encontradas con una nueva subcadena.
+
+```javascript
+const str = 'hello world';
+const regex = /hello/;
+console.log(str.replace(regex, 'hi')); // "hi world"
+```
+
+Flags (Modificadores)
+- g: Búsqueda global, encuentra todas las coincidencias.
+- i: Búsqueda insensible a mayúsculas y minúsculas.
+- m: Búsqueda en modo multilínea.
+- s: Permite que . coincida con caracteres de nueva línea.
+- u: Habilita el modo unicode para la coincidencia.
+- y: Búsqueda pegajosa que busca coincidencias a partir de la posición actual en la cadena.
+
+Ejemplos Comunes
+Validar una dirección de correo electrónico
+```javascript
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+console.log(emailRegex.test('user@example.com')); // true
+```
+
+Validar un número de teléfono (formato 123-456-7890)
+```javascript
+const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+console.log(phoneRegex.test('123-456-7890')); // true
+```
+Extraer todas las palabras de una cadena
+
+```javascript
+const text = 'Hello, how are you?';
+const words = text.match(/\b\w+\b/g);
+console.log(words); // ["Hello", "how", "are", "you"]
+```
+
+
+
+
+
+## Try & Catch (Manejo de Errores Síncronos)
+
+El manejo de errores en JavaScript se realiza a menudo utilizando bloques `try...catch`. Estos bloques permiten detectar y manejar errores para mantener la estabilidad del programa, evitando que los errores no controlados provoquen fallos inesperados.
+
+### Uso de `try...catch`
+
+Un bloque `try...catch` consta de dos partes principales:
+- `try`: Contiene el código que puede lanzar una excepción.
+- `catch`: Contiene el código que se ejecuta si ocurre una excepción en el bloque `try`.
+
+### Sintaxis Básica
+
+```javascript
+try {
+    // Código que puede lanzar un error
+    console.log("Intentando ejecutar código...");
+    throw new Error("Ocurrió un error!");
+} catch (error) {
+    // Código para manejar el error
+    console.log("Se capturó un error:", error.message);
+}finally{
+    //Se ejecuta siempre
+    console.log("Se ejecuta siempre");
+}
+```
 
 ## Callbacks
-Uso de funciones callback:
-- Pasar funciones como argumentos para manejar tareas asíncronas.
+
+### Uso de Funciones Callback
+
+Una función callback es una función que se pasa como argumento a otra función y se ejecuta después de que se complete una tarea. Los callbacks son una forma común de manejar operaciones asíncronas en JavaScript, como la lectura de archivos, consultas a bases de datos o solicitudes de red.
+
+### Características de los Callbacks
+
+- **Definición**: Una función que se pasa como argumento a otra función y se llama dentro de esa función.
+- **Asincronía**: Permiten ejecutar código después de que se haya completado una operación asíncrona.
+- **Control de Flujo**: Facilitan la organización y el manejo del flujo de operaciones asíncronas.
+
+### Ejemplo Básico
+
+```javascript
+function mostrarConsola(num) {
+    console.log(num);
+}
+
+function calcular(num1, num2, callback) {
+    let suma =num1+num2;
+    callback(suma);
+}
+
+calcular(1,3,mostrarConsola);
+// Salida:
+// 4
+```
 
 ## Promesas
-Manejo de promesas:
+
+### Manejo de Promesas
+
+Las promesas en JavaScript son objetos que representan la eventual finalización (o falla) de una operación asíncrona y su valor resultante. Las promesas proporcionan una forma más limpia y manejable de trabajar con operaciones asíncronas en comparación con los callbacks anidados.
+
 - Crear y usar promesas con `new Promise()`.
 - Métodos `then()`, `catch()`, `finally()` para manejar el flujo asíncrono.
 
+### Crear y Usar Promesas
+
+Las promesas se crean utilizando el constructor `new Promise()`, que toma una función ejecutora con dos argumentos: `resolve` y `reject`. 
+
+```javascript
+let promesa1 = new Promise ((response) => {
+  setTimeout(() =>{
+    let resp = {
+      response:200,
+      description: '1 Esta info es importante'
+    }
+    response(resp);
+  }, 3000);
+  
+})
+
+let promesa2 = new Promise ((response) => {
+  setTimeout(() =>{
+    let resp = {
+      response:200,
+      description: '2 esta info es importante pero suele demorar mucho'
+    }
+    response(resp);
+  }, 5000);
+  
+})
+
+let promesa3 = new Promise ((response) => {
+  setTimeout(() =>{
+    let resp = {
+      response:200,
+      description: '3 Esta info es rapida'
+    }
+    response(resp);
+  }, 2500);
+  
+})
+
+
+promesa1.then(res =>{
+    console.log(res.description)
+    promesa2.then(res =>{
+        console.log(res.description)
+        promesa3.then(res =>{
+            console.log(res)
+        }).catch(error => {
+          console.warn(error)
+        })
+    }).catch(error=> {
+      console.warn(error)
+    })
+}).catch(error => {
+  console.warn(error)
+})
+//Este codigo lo ejecuta de manera secuencia pero no es tan comodo de usar, por eso usamos await y async
+```
+
+
 ## Async & Await
-Sintaxis para manejar promesas:
-- Uso de `async` y `await` para escribir código asíncrono de manera más legible.
+
+### Sintaxis para Manejar Promesas
+
+`async` y `await` son características de JavaScript que simplifican la escritura y el manejo de código asíncrono basado en promesas.
+
+### Uso de `async`
+
+La palabra clave `async` se utiliza para declarar que una función devuelve una promesa. Permite que la función sea ejecutada de forma asíncrona y que pueda utilizar `await` dentro de ella.
+
+```javascript
+async function ejecutarPromesas() {
+  let respuestaProm1 = await promesa1;
+  console.log(respuestaProm1);
+  let respuestaProm2 = await promesa2;
+  console.log(respuestaProm2);
+  let respuestaProm3 = await promesa3;
+  console.log(respuestaProm3);
+  }
+
+  ejecutarPromesas();
+```
 
 ## Fetch, APIs, JSON
 Interacción con APIs:
