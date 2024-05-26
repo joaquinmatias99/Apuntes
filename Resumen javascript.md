@@ -448,6 +448,111 @@ async function ejecutarPromesas() {
 ```
 
 ## Fetch, APIs, JSON
-Interacción con APIs:
-- Uso de `fetch()` para realizar solicitudes HTTP.
+
+
+
+### Interacción con APIs
+
+Las APIs (Interfaces de Programación de Aplicaciones) son conjuntos de reglas y definiciones que permiten que diferentes aplicaciones se comuniquen entre sí. La interacción con APIs es fundamental para acceder y manipular datos de servicios web externos.
+
 - Manipulación de datos en formato JSON con `JSON.parse()` y `JSON.stringify()`.
+
+### Uso de Fetch()
+
+### Uso del get: Obtener información
+
+`fetch()` es una función nativa de JavaScript utilizada para realizar solicitudes HTTP a servidores web y obtener recursos. Es una API moderna y versátil que devuelve promesas, lo que permite manejar las respuestas de manera asíncrona.
+
+```javascript
+fetch('https://jsonplaceholder.typicode.com/comments?postId=5')
+      .then(response => response.json())
+      .then(json => console.log(json))
+
+
+//También podemos hacer:
+
+let urlBase ='https://jsonplaceholder.typicode.com/'
+let query = 'comments?postId=5'
+fetch(`${urlBase}/${query}`)
+  .then(response => response.json())
+  .then(json => console.log(json))
+```
+
+### Uso del Post: Enviar información
+
+```javascript
+let urlBase ='https://jsonplaceholder.typicode.com/'
+
+let requestBody={
+  title: 'Ricardo comenta sobre tu foto',
+  body: '¡Que bella foto!',
+  userId: 1,  
+}
+
+fetch(`${urlBase}/posts`,{
+  method: 'POST',
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+  body: JSON.stringify(requestBody)
+})
+  .then(response => response.json())
+  .then(json => console.log(json))
+```
+
+### Uso del Put: Editar informacion
+
+```javascript
+let urlBase ='https://jsonplaceholder.typicode.com/'
+let posteo=5
+let requestBody={
+  id: 3,
+  title: 'Ricardo comenta sobre tu foto',
+  body: '¡Que bella foto!',
+  userId: 1,  
+}
+
+fetch(`${urlBase}/posts/${posteo}`,{
+  method: 'PUT',
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+  body: JSON.stringify(requestBody)
+})
+  .then(response => response.json())
+  .then(json => console.log(json))
+```
+
+
+
+### Uso del Patch: Modifica un solo atributo
+```javascript
+let urlBase ='https://jsonplaceholder.typicode.com/'
+let post=10
+let modificacion ={
+  title: 'Este titulo ha sido modificado'
+  }
+
+
+fetch(`${urlBase}/posts/${post}`,{
+  method: 'PATCH',
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+  body: JSON.stringify(modificacion)
+})
+  .then(response => response.json())
+  .then(json => console.log(json))
+```
+
+### Uso del Delete: Borrar un item
+
+```javascript
+let urlBase ='https://jsonplaceholder.typicode.com/'
+let query
+let idEliminar=7
+fetch(`${urlBase}/posts/${idEliminar}`,{
+  method: 'DELETE',
+});
+```
+
