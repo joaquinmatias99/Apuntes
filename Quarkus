@@ -1,0 +1,74 @@
+# Introducción a Quarkus
+
+## ¿Qué es Quarkus?
+Quarkus es un framework de Kubernetes nativo diseñado para ejecutar Java en contenedores. Optimiza Java para arquitecturas de microservicios y serverless, proporcionando tiempos de inicio rápidos y un bajo consumo de memoria.
+
+## Ventajas de Quarkus
+
+- **Inicio Rápido y Bajo Consumo de Memoria**: Optimizado para GraalVM y JVM, permite tiempos de inicio rápidos y un uso eficiente de la memoria.
+- **Desarrollo en Vivo**: Ofrece un ciclo de desarrollo continuo con la capacidad de recargar aplicaciones en vivo sin necesidad de reiniciar el servidor.
+- **Extensa Compatibilidad**: Compatible con muchas extensiones y frameworks como Hibernate, RESTEasy, y MicroProfile.
+- **Preparado para Kubernetes**: Diseñado con Kubernetes en mente, facilita la creación y despliegue de aplicaciones en entornos de contenedores.
+
+## Comparación con Spring
+
+- **Desempeño**: Quarkus generalmente proporciona mejor rendimiento en términos de tiempo de inicio y uso de memoria comparado con Spring Boot.
+- **Desarrollo**: Ambos frameworks ofrecen herramientas robustas para el desarrollo, aunque Quarkus se enfoca más en el desarrollo en vivo y la integración nativa con GraalVM.
+- **Ecosistema**: Spring tiene una comunidad y un ecosistema más grande y maduro, pero Quarkus está ganando tracción rápidamente y ofrece una integración más fluida con tecnologías de contenedores.
+
+## Primeros Pasos con Quarkus
+
+### Instalación
+1. **Maven**: 
+    ```sh
+    mvn io.quarkus:quarkus-maven-plugin:create \
+        -DprojectGroupId=com.example \
+        -DprojectArtifactId=my-quarkus-app \
+        -DclassName="com.example.GreetingResource" \
+        -Dpath="/hello"
+    ```
+
+2. **Gradle**:
+    ```sh
+    ./gradlew wrapper --gradle-version=6.0.1
+    ```
+
+### Estructura del Proyecto
+- **src/main/java**: Código fuente principal.
+- **src/main/resources**: Archivos de configuración y recursos.
+- **src/test**: Pruebas unitarias y de integración.
+
+### Ejemplo Básico
+```java
+package com.example;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Path("/hello")
+public class GreetingResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello, Quarkus!";
+    }
+}
+```
+
+## Compilación y Ejecución
+Modo de Desarrollo:
+
+```sh
+mvn quarkus:dev
+ ```
+Permite recargar cambios en vivo.
+
+Compilación Nativa:
+```sh
+mvn package -Pnative
+```
+
+Genera un ejecutable nativo usando GraalVM.
