@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+extern int recibir_Operacion(int numero1, char operador, int numero2);
+
+void leerPregunta(char* pregunta){
+        printf("Ingrese una operacion\n");
+        fgets(pregunta, 100, stdin);
+        pregunta[strcspn(pregunta,"\n")] = 0;
+}
+
+
+int main(){
+
+        int numero1, numero2,resultado;
+        char operador;
+        char pregunta[100];
+        char *token;
+
+
+        while(1){
+        leerPregunta(pregunta);
+        //scanf("%d %c %d", &numero1, &operador, &numero2);
+
+        token = strtok(pregunta," ");
+        if (token == NULL){
+printf("mir rta1 limitadas\n");
+                continue;
+        }
+        numero1 = atoi(token);
+
+        token = strtok(NULL," ");
+        if (token == NULL || strlen(token) != 1){
+        printf("Mis rta2 son limintadas\n");
+        continue;
+        }
+        operador=token[0];
+
+
+        token = strtok(pregunta," ");
+        if (token == NULL){
+printf("mir rta1 limitadas\n");
+                continue;
+        }
+        numero1 = atoi(token);
+
+        token = strtok(NULL," ");
+        if (token == NULL || strlen(token) != 1){
+        printf("Mis rta2 son limintadas\n");
+        continue;
+        }
+        operador=token[0];
+
+
+        token = strtok(pregunta," ");
+        if (token == NULL){
+printf("mir rta3 limitadas\n");
+                continue;
+        }
+        numero2 = atoi(token);
+
+        resultado=recibir_Operacion(numero1, operador, numero2);
+
+        if (operador == '/' && numero2 == 0){
+
+                printf("Mis respuestas son limitadas");
+        }
+        else{
+                printf("el resultado es: %d\n", resultado);
+
+        }
